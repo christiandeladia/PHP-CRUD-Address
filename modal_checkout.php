@@ -1,13 +1,10 @@
 <?php
 require "connect.php";
 
-
-# Get orders
 $sql = "SELECT * FROM `address` ORDER BY date_added DESC;";
 $stmt = $pdo->prepare($sql);
-$stmt->execute();
+$stmt->execute([]);
 $address = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 
 
 // Count the total number of orders
@@ -20,23 +17,18 @@ $totalAddress = count($address);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <title>MODAL-CHECKOUT - ICP</title>
+    <title>Address PHP CRUD</title>
     <link rel="icon" type="image/x-icon" href="image/favicon.ico">
-    <link rel="stylesheet" href="style/nav.css">
-    <link rel="stylesheet" href="style/checkout.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <style>
-/* html {
+html {
     box-sizing: border-box;
     height: 100%;
 }
@@ -50,7 +42,7 @@ $totalAddress = count($address);
 body {
     font-size: 1em;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    color: #566270;
+    /* color: #566270; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,9 +50,9 @@ body {
     margin-top: 20vh;
     background-size: cover;
     background-repeat: no-repeat;
-    background: #ff7473;
-    background: linear-gradient(to top right, #ff7473, #ffc952);
-} */
+    /* background: #ff7473; */
+    /* background: linear-gradient(to top right, #ff7473, #ffc952); */
+}
 
 h1 {
     padding-bottom: 1rem;
@@ -452,6 +444,8 @@ h2 {
 
 
 <body>
+
+
     <div class="modal-content slideDown">
 
         <div class="modal-header">
@@ -514,29 +508,29 @@ h2 {
                     <div class="form-wapper">
 
                         <div class="form-body">
-                            <form method="POST" action="address/add_address.php">
+                            <form method="POST" action="address/add_address.php" autocomplete="off">
                                 <div class="input-wrapper">
                                     <div class="select-wrapper">
                                         <label for="first_name">First name</label>
                                         <input id="first_name" type="text" name="first_name"
-                                            placeholder="Enter First name" required autocomplete="given-name">
+                                            placeholder="Enter First name" required>
                                     </div>
                                     <div class="select-wrapper">
                                         <label for="last_name">Last name</label>
                                         <input id="last_name" type="text" name="last_name" placeholder="Enter Last name"
-                                            required autocomplete="family-name">
+                                            required>
                                     </div>
                                 </div>
                                 <div class="input-wrapper">
                                     <div class="select-wrapper">
                                         <label for="mobile_number">Mobile Number</label>
                                         <input type="tel" id="mobile_number" name="mobile_number"
-                                            placeholder="09*********" pattern="[0-9]{11}" required autocomplete="tel">
+                                            placeholder="09*********" pattern="[0-9]{11}" required>
                                     </div>
                                     <div class="select-wrapper">
                                         <label for="zip_code">Zip Code</label>
                                         <input id="zip_code" type="text" name="zip_code" placeholder="Enter Zip Code"
-                                            required autocomplete="postal-code">
+                                            required>
                                     </div>
                                 </div>
                                 <div class="input-wrapper">
@@ -577,8 +571,7 @@ h2 {
                                 </div>
                                 <div class="input-wrapper">
                                     <label for="street">House No. and Street</label>
-                                    <input id="street" type="text" name="street" placeholder="Enter Street" required
-                                        autocomplete="street-address">
+                                    <input id="street" type="text" name="street" placeholder="Enter Street" required>
                                 </div>
                                 <div class="input-wrapper">
                                     <label for="shipping_fee">Shipping Fee</label>
@@ -694,7 +687,7 @@ h2 {
 
 
 </body>
-
+<script src="address/address_selector.js"></script>
 <script>
 const addressModal = document.getElementById('addressModal');
 const addButton = document.querySelectorAll('.add_address');

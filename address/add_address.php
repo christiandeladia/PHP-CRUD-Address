@@ -36,6 +36,6 @@
         header("Location: ../modal_checkout.php");
     } else {
         // If form not submitted, redirect back to index.php
-        header("Location: ../index.php");
+        header("Location: ../modal_checkout.php");
     }
 ?>
