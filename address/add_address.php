@@ -1,9 +1,6 @@
 <?php
     require_once "../connect.php";
 
-    if (!isset($_SESSION['auth_login'])) {
-        header("Location: ../index.php");
-    }
 
     // Check if form is submitted
     if (isset($_POST['cart_checkout'])) {
