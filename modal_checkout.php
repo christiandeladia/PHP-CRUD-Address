@@ -74,6 +74,7 @@ $totalAddress = count($address);
                     </label>
                     <?php } ?>
                 </div>
+                
         </div>
 
         <div class="modal-footer">
