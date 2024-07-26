@@ -29,144 +29,223 @@ $totalAddress = count($address);
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
+<style>
+html {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-size: 1em;
+    font-weight: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+</style>
+
+<body>
+
+    <div class="container-sm" style="margin: 0 auto; width: 90%; margin-top: 20px;">
+        <!-- Button Add modal -->
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+            <i class="fas fa-plus"></i> Add
+        </button>
+
+        <table class="table table-hover table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($address as $row) { ?>
+                <tr>
+                    <th scope="row"><?php echo $row['id']; ?></th>
+                    <td><?php echo $row['first_name']; ?></td>
+                    <td><?php echo $row['last_name']; ?></td>
+                    <td><?php echo $row['mobile_number']; ?></td>
+                    <td><?php echo $row['street']; ?>, <?php echo $row['barangay']; ?>, <?php echo $row['city']; ?>,
+                        <?php echo $row['province']; ?>, <?php echo $row['region']; ?>, <?php echo $row['zip_code']; ?>
+                    </td>
+                    <td>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-warning btn-sm fw-bold" type="button">Edit</button>
+                            <button class="btn btn-danger btn-sm fw-semibold" data-bs-toggle="modal" data-bs-target="#deleteModal" type="button">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+
+        </table>
+
+    </div>
 
 
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Launch static backdrop modal
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add Delivery Address</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3 needs-validation" method="POST" action="address/add_address.php" autocomplete="off"
-                    novalidate>
-                    <div class="col-md-4">
-                        <label for="first_name" class="form-label">First name</label>
-                        <input type="text" class="form-control" id="first_name" name="first_name"
-                            placeholder="Enter First name" required>
+
+    <!-- Add Modal -->
+    <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add Delivery Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation" method="POST" action="address/add_address.php"
+                        autocomplete="off" novalidate>
+                        <div class="col-md-4">
+                            <label for="first_name" class="form-label">First name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                placeholder="Enter First name" required>
                             <div class="invalid-feedback">
-                             Input a valid First Name.
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="last_name" class="form-label">Last name</label>
-                        <input type="text" class="form-control" id="last_name" name="last_name"
-                            placeholder="Enter Last name" required>
-                            <div class="invalid-feedback">
-                             Input a valid Last Name.
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="mobile_number" class="form-label">Mobile Number</label>
-                        <input type="tel" class="form-control" id="mobile_number" name="mobile_number"
-                            placeholder="09*********" pattern="[0-9]{11}" required>
-                            <div class="invalid-feedback">
-                             Input a valid Mobile number.
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="region" class="form-label">Region</label>
-                        <select class="form-select" name="region" id="region" autocomplete="region" required>
-                        </select>
-                        <input type="hidden" class="form-control form-control-md" name="region_text" id="region-text"
-                            required>
-                        <div class="invalid-feedback">
-                            Select a valid Region.
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="province" class="form-label">Province</label>
-                        <select class="form-select" name="province" id="province" autocomplete="province" required>
-                        </select>
-                        <input type="hidden" class="form-control form-control-md" name="province_text"
-                            id="province-text" required>
-                        <div class="invalid-feedback">
-                            Select a valid Province.
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="city" class="form-label">City/Municipality</label>
-                        <select class="form-select" name="city" id="city" autocomplete="city" required>
-                        </select>
-                        <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text"
-                            required>
-                        <div class="invalid-feedback">
-                            Select a valid City.
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="barangay" class="form-label">barangay</label>
-                        <select class="form-select" name="barangay" id="barangay" autocomplete="barangay" required>
-                        </select>
-                        <input type="hidden" class="form-control form-control-md" name="barangay_text"
-                            id="barangay-text" required>
-                        <div class="invalid-feedback">
-                            Select a valid Barangay.
-                        </div>
-                    </div>
-                    <div class="col-md-9">
-                        <label for="street" class="form-label">House No. and Street</label>
-                        <input type="text" class="form-control" id="street" name="street"
-                            placeholder="Enter House No. and Street" required>
-                            <div class="invalid-feedback">
-                             Input a valid Street.
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="zip_code" class="form-label">Zip Code</label>
-                        <input type="text" class="form-control" id="zip_code" name="zip_code"
-                            placeholder="Enter Zip Code" required>
-                        <div class="invalid-feedback">
-                             Input a valid zip.
-                        </div>
-                    </div>
-                    <div class="col-md-4" style="display: none;">
-                        <label for="shipping_fee" class="form-label">Shipping Fee</label>
-                        <input type="number" class="form-control" id="shipping_fee" name="shipping_fee"
-                            placeholder="Shipping Fee" readonly>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                            <label class="form-check-label" for="invalidCheck">
-                                Agree to terms and conditions
-                            </label>
-                            <div class="invalid-feedback">
-                                You must agree before submitting.
+                                Input a valid First Name.
                             </div>
                         </div>
-                    </div>
-                    <input type="hidden" value="true" name="cart_checkout" />
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </form>
-            </div>
+                        <div class="col-md-4">
+                            <label for="last_name" class="form-label">Last name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                placeholder="Enter Last name" required>
+                            <div class="invalid-feedback">
+                                Input a valid Last Name.
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="mobile_number" class="form-label">Mobile Number</label>
+                            <input type="tel" class="form-control" id="mobile_number" name="mobile_number"
+                                placeholder="09*********" pattern="[0-9]{11}" required>
+                            <div class="invalid-feedback">
+                                Input a valid Mobile number.
+                            </div>
+                        </div>
 
+                        <div class="col-md-3">
+                            <label for="region" class="form-label">Region</label>
+                            <select class="form-select" name="region" id="region" autocomplete="region" required>
+                            </select>
+                            <input type="hidden" class="form-control form-control-md" name="region_text"
+                                id="region-text" required>
+                            <div class="invalid-feedback">
+                                Select a valid Region.
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="province" class="form-label">Province</label>
+                            <select class="form-select" name="province" id="province" autocomplete="province" required>
+                            </select>
+                            <input type="hidden" class="form-control form-control-md" name="province_text"
+                                id="province-text" required>
+                            <div class="invalid-feedback">
+                                Select a valid Province.
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="city" class="form-label">City/Municipality</label>
+                            <select class="form-select" name="city" id="city" autocomplete="city" required>
+                            </select>
+                            <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text"
+                                required>
+                            <div class="invalid-feedback">
+                                Select a valid City.
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="barangay" class="form-label">barangay</label>
+                            <select class="form-select" name="barangay" id="barangay" autocomplete="barangay" required>
+                            </select>
+                            <input type="hidden" class="form-control form-control-md" name="barangay_text"
+                                id="barangay-text" required>
+                            <div class="invalid-feedback">
+                                Select a valid Barangay.
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <label for="street" class="form-label">House No. and Street</label>
+                            <input type="text" class="form-control" id="street" name="street"
+                                placeholder="Enter House No. and Street" required>
+                            <div class="invalid-feedback">
+                                Input a valid Street.
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="zip_code" class="form-label">Zip Code</label>
+                            <input type="text" class="form-control" id="zip_code" name="zip_code"
+                                placeholder="Enter Zip Code" required>
+                            <div class="invalid-feedback">
+                                Input a valid zip.
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="display: none;">
+                            <label for="shipping_fee" class="form-label">Shipping Fee</label>
+                            <input type="number" class="form-control" id="shipping_fee" name="shipping_fee"
+                                placeholder="Shipping Fee" readonly>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                <label class="form-check-label" for="invalidCheck">
+                                    Agree to terms and conditions
+                                </label>
+                                <div class="invalid-feedback">
+                                    You must agree before submitting.
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" value="true" name="cart_checkout" />
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
+
+
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Address</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this address?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success">Confirm</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
 
-
-
+</body>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
@@ -177,3 +256,5 @@ $totalAddress = count($address);
 </script>
 <script src="address/address_selector.js"></script>
 <script src="validation.js"></script>
+
+</html>
